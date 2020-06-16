@@ -1,7 +1,8 @@
 const http = require('http');
 const fs = require('fs');
+var exec = require('child_process').exec;
 
-class AdminApp {
+class CriptoChecker {
 
     constructor (config) {
         http.createServer((req, res) => {
@@ -13,6 +14,34 @@ class AdminApp {
                 console.log('Criptockecker: Server is listening on ' + config.port);
             }
         });
+
+        var oldPrice = null;
+
+        setInterval(() => {
+            http.get('http://api.coindesk.com/v1/bpi/currentprice.json', (resp) => {
+                let data = '';
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+                resp.on('end', () => {
+                    data = JSON.parse(data);
+                    let newPrice = data.bpi.USD.rate_float;
+                    if (oldPrice && (newPrice + 20) < oldPrice) {
+                        let message = 'Price decreased more then 20$! ' + parseInt(oldPrice) + ' ' + parseInt(newPrice);
+                        console.log(message);
+                        let command = 'curl -s -X POST https://api.telegram.org/bot1233545207:AAGHKvCEZYKxNHcdFFvnzvwaxTPEZkDTtvs/sendMessage -d chat_id=622805987 -d text="' + message + '"';
+                        exec(command, function (error, stdout, stderr) {
+                            stdout && console.log('stdout: ' + stdout);
+                            stderr && console.log('stderr: ' + stderr);
+                            error && console.log('exec error: ' + error);
+                        });
+                    }
+                    oldPrice = newPrice;
+                });
+            }).on('error', (err) => {
+                console.log('Error: ' + err.message);
+            });
+        }, 3 * 1000 * 60);
     }
 
     answer (req, res) {
@@ -40,6 +69,6 @@ class AdminApp {
     }
 }
 
-new AdminApp({
+new CriptoChecker({
     port: 7789
 });
