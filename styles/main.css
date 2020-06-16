@@ -1,0 +1,24 @@
+/* Styles reset */
+* {
+    font-family: 'Verdana', 'Candara', sans-serif;
+    border: 0 none;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* Main */
+body {
+    background-color: #fdfeff;
+    color: #333;
+}
+
+#header {
+    padding: 20px;
+    font-size: 42px;
+}
+
+#organizations {
+    padding: 20px;
+    font-size: 24px;
+}

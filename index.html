@@ -1,0 +1,25 @@
+<html lang="ru">
+<head>
+    <title>clientbook.ru</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/styles/main.css">
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="admin-app">
+        <div id="header">
+            CRIPTOCHECKER
+            <div>
+                <a href="/#/">Main</a>
+                <a href="/#/criptochecker">BTC Price</a>
+            </div>
+        </div>
+        <router-view></router-view>
+    </div>
+    <script src="/scripts/all.js"></script>
+</body>
+</html>
