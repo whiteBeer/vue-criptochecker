@@ -8,9 +8,9 @@ class AdminApp {
             this.answer(req, res);
         }).listen(config.port, (err) => {
             if (err) {
-                console.log('Admin App: Something bad happened', err);
+                console.log('Criptockecker: Something bad happened', err);
             } else {
-                console.log('Admin App: Server is listening on ' + config.port);
+                console.log('Criptockecker: Server is listening on ' + config.port);
             }
         });
     }
@@ -41,5 +41,5 @@ class AdminApp {
 }
 
 new AdminApp({
-    port: 8888
+    port: 7789
 });
