@@ -23,7 +23,7 @@ class CriptoChecker {
         }, 10 * 60 * 1000);
 
         function refresh () {
-            console.log('CriptoChecker refresh.');
+            console.log(new Date() + ' CriptoChecker refresh.');
             http.get('http://api.coindesk.com/v1/bpi/currentprice.json', (resp) => {
                 let data = '';
                 resp.on('data', (chunk) => {
