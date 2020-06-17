@@ -20,10 +20,9 @@ class CriptoChecker {
         refresh();
         setInterval(() => {
             refresh();
-        }, 10 * 60 * 1000);
+        }, 5 * 60 * 1000);
 
         function refresh () {
-            console.log(new Date() + ' CriptoChecker refresh.');
             http.get('http://api.coindesk.com/v1/bpi/currentprice.json', (resp) => {
                 let data = '';
                 resp.on('data', (chunk) => {
@@ -33,8 +32,9 @@ class CriptoChecker {
                     try {
                         data = JSON.parse(data);
                         let newPrice = data.bpi.USD.rate_float;
-                        if (oldPrice && ((newPrice + 50) < oldPrice)) {
-                            let message = 'Price decreased more then 50$! ' + parseInt(oldPrice) + ' ' + parseInt(newPrice);
+                        console.log(new Date() + ' CriptoChecker refresh. ' + parseInt(oldPrice) + ' ' + parseInt(newPrice));
+                        if (oldPrice && ((newPrice + 20) < oldPrice)) {
+                            let message = 'Price decreased more then 20$! ' + parseInt(oldPrice) + ' ' + parseInt(newPrice);
                             console.log(message);
                             let command = 'curl -s -X POST https://api.telegram.org/bot1233545207:AAGHKvCEZYKxNHcdFFvnzvwaxTPEZkDTtvs/sendMessage -d chat_id=622805987 -d text="' + message + '"';
                             exec(command, function (error, stdout, stderr) {
@@ -43,7 +43,7 @@ class CriptoChecker {
                                 error && console.log('exec error: ' + error);
                             });
                         }
-                        oldPrice = newPrice;
+                        oldPrice = (oldPrice + newPrice) / 2;
                     } catch (e) {}
                 });
             }).on('error', (err) => {
