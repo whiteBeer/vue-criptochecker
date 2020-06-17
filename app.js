@@ -43,7 +43,11 @@ class CriptoChecker {
                                 error && console.log('exec error: ' + error);
                             });
                         }
-                        oldPrice = (oldPrice + newPrice) / 2;
+                        if (oldPrice) {
+                            oldPrice = (oldPrice + newPrice) / 2;
+                        } else {
+                            oldPrice = newPrice;
+                        }
                     } catch (e) {}
                 });
             }).on('error', (err) => {
