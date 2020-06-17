@@ -20,7 +20,7 @@ class CriptoChecker {
         refresh();
         setInterval(() => {
             refresh();
-        }, 2 * 60 * 1000);
+        }, 3 * 60 * 1000);
 
         function refresh () {
             http.get('http://api.coindesk.com/v1/bpi/currentprice.json', (resp) => {
@@ -31,10 +31,10 @@ class CriptoChecker {
                 resp.on('end', () => {
                     try {
                         data = JSON.parse(data);
-                        let newPrice = data.bpi.USD.rate_float;
-                        console.log(new Date() + ' CriptoChecker refresh. ' + parseInt(oldPrice) + ' ' + parseInt(newPrice));
-                        if (oldPrice && ((newPrice + 5) < oldPrice)) {
-                            let message = 'Price decreased more then 5$! ' + parseInt(oldPrice) + ' ' + parseInt(newPrice);
+                        let newPrice = parseInt(data.bpi.USD.rate_float);
+                        console.log(new Date() + ' CriptoChecker refresh. ' + oldPrice + ' ' + newPrice);
+                        if (oldPrice && ((newPrice + 10) < oldPrice)) {
+                            let message = 'Price decreased more then 10$ in 3 minutes !!! ' + oldPrice + ' ' + newPrice;
                             console.log(message);
                             let command = 'curl -s -X POST https://api.telegram.org/bot1233545207:AAGHKvCEZYKxNHcdFFvnzvwaxTPEZkDTtvs/sendMessage -d chat_id=622805987 -d text="' + message + '"';
                             exec(command, function (error, stdout, stderr) {
@@ -43,10 +43,10 @@ class CriptoChecker {
                                 error && console.log('exec error: ' + error);
                             });
                         } else {
-                            console.log(oldPrice, newPrice, (newPrice + 5), ((newPrice + 20) < oldPrice));
+                            console.log(oldPrice, newPrice);
                         }
                         if (oldPrice) {
-                            oldPrice = (oldPrice + newPrice) / 2;
+                            oldPrice = parseInt((oldPrice + newPrice) / 2);
                         } else {
                             oldPrice = newPrice;
                         }
