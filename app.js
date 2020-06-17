@@ -43,7 +43,7 @@ class CriptoChecker {
                                 error && console.log('exec error: ' + error);
                             });
                         } else {
-                            console.log(oldPrice, newPrice);
+                            console.log('oldPrice && ((newPrice + 10) < oldPrice) = ', oldPrice && ((newPrice + 10) < oldPrice));
                         }
                         if (oldPrice) {
                             oldPrice = parseInt((oldPrice + newPrice) / 2);
