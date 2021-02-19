@@ -34,7 +34,7 @@ class CriptoChecker {
                         let newPrice = parseInt(data.bpi.USD.rate_float);
                         console.log(new Date() + ' CriptoChecker refresh. ' + oldPrice + ' ' + newPrice);
                         if (oldPrice && ((newPrice + 50) < oldPrice)) {
-                            let message = 'Price decreased more then 50$ in 3 minutes !!! ' + oldPrice + ' ' + newPrice;
+                            let message = 'Bitcoin price decreased more then 50$ in 3 minutes! (from ' + oldPrice + ' to ' + newPrice + ')';
                             console.log(message);
                             let command = 'curl -s -X POST https://api.telegram.org/bot1627579760:AAGmUpnK1craL5cJKofRaUJcSD8Cyz4SzsY/sendMessage -d chat_id=622805987 -d text="' + message + '"';
                             exec(command, function (error, stdout, stderr) {
