@@ -33,17 +33,17 @@ class CriptoChecker {
                         data = JSON.parse(data);
                         let newPrice = parseInt(data.bpi.USD.rate_float);
                         console.log(new Date() + ' CriptoChecker refresh. ' + oldPrice + ' ' + newPrice);
-                        if (oldPrice && ((newPrice + 100) < oldPrice)) {
-                            let message = 'Bitcoin price decreased more then 100$ in 3 minutes! (from ' + oldPrice + ' to ' + newPrice + ')';
+                        if (oldPrice && ((newPrice + 150) < oldPrice)) {
+                            let message = 'Bitcoin price decreased more then 150$ in 3 minutes! (from ' + oldPrice + ' to ' + newPrice + ')';
                             console.log(message);
-                            let command = 'curl -s -X POST https://api.telegram.org/bot1627579760:AAGUKYrm7XHKz9K80JxEZClSI30uECiXEUs/sendMessage -d chat_id=-1001300572263 -d text="' + message + '"';
+                            let command = 'curl -s -X POST https://api.telegram.org/bot1627579760:AAHdN291h_Sbj2Oq1KK3WgsVSoSCCSzLS98/sendMessage -d chat_id=-1001300572263 -d text="' + message + '"';
                             exec(command, function (error, stdout, stderr) {
                                 stdout && console.log('stdout: ' + stdout);
                                 stderr && console.log('stderr: ' + stderr);
                                 error && console.log('exec error: ' + error);
                             });
                         } else {
-                            console.log('oldPrice && ((newPrice + 100) < oldPrice) = ', oldPrice && ((newPrice + 100) < oldPrice));
+                            console.log('oldPrice && ((newPrice + 150) < oldPrice) = ', oldPrice && ((newPrice + 150) < oldPrice));
                         }
                         if (oldPrice) {
                             oldPrice = parseInt((oldPrice + newPrice) / 2);
